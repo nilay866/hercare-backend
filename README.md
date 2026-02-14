@@ -16,6 +16,9 @@ See `render.yaml` for configuration.
 | `DATABASE_URL` | PostgreSQL connection string |
 | `SECRET_KEY` | JWT signing secret |
 
+## Database Setup
+The application uses **SQLAlchemy** to automatically create database tables (`users`, `health_logs`) on startup if they don't exist. No manual migration is needed for initial setup.
+
 ## Local Development
 ```bash
 pip install -r requirements.txt
