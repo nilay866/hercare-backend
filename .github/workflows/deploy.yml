@@ -1,0 +1,42 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            # Navigate to app directory
+            cd /app
+            
+            # Pull latest code
+            sudo git pull origin main
+            
+            # Build new image
+            sudo docker build -t hercare-backend .
+            
+            # Stop and remove old container
+            sudo docker rm -f $(sudo docker ps -aq --filter ancestor=hercare-backend) || true
+            
+            # Run new container
+            sudo docker run -d \
+              -p 127.0.0.1:8000:8000 \
+              --restart always \
+              -e DATABASE_URL='${{ secrets.DATABASE_URL }}' \
+              -e SECRET_KEY='${{ secrets.SECRET_KEY }}' \
+              -e WORKERS=4 \
+              hercare-backend
+            
+            # Prune unused images to save space
+            sudo docker image prune -f
