@@ -43,6 +43,7 @@ app.add_middleware(
         "https://nilay866.github.io",
         "http://localhost:8082",
         "http://localhost:8083",
+        "http://hercare-app-frontend-u1al0f.s3-website.ap-south-1.amazonaws.com",
         "http://localhost",
         "http://127.0.0.1",
     ],
