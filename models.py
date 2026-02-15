@@ -57,6 +57,8 @@ class DoctorPatientLink(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     doctor_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
     patient_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    permissions = Column(JSON, nullable=True, default={})
+    share_code = Column(String, unique=True, nullable=True) # For linking shadow records
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class MedicalReport(Base):
@@ -129,4 +131,142 @@ class HealthLog(Base):
 
     user = relationship("User", back_populates="health_logs")
 
-Base.metadata.create_all(bind=engine, checkfirst=True)
+class MedicalHistory(Base):
+    __tablename__ = "medical_histories"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    patient_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, unique=True, index=True)
+    allergies = Column(Text, nullable=True)
+    chronic_conditions = Column(Text, nullable=True)
+    surgeries = Column(Text, nullable=True)
+    medications = Column(Text, nullable=True)
+    consulting_summary = Column(Text, nullable=True)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class Consultation(Base):
+    __tablename__ = "consultations"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    doctor_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    patient_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    visit_date = Column(Date, nullable=False, default=date.today)
+    symptoms = Column(Text, nullable=True)
+    diagnosis = Column(Text, nullable=True)
+    treatment_plan = Column(Text, nullable=True) 
+    # Phase 5: Structured Rx & Billing
+    prescriptions = Column(JSON, nullable=True) # [{"name": "Panadol", "dosage": "500mg", "timing": "Morning", "duration": "5 days"}]
+    billing_items = Column(JSON, nullable=True) # [{"service": "Consultation", "cost": 50.0}]
+    total_amount = Column(Float, default=0.0)
+    payment_status = Column(String, default="pending") # pending, paid
+    
+    prescription_text = Column(Text, nullable=True) # Keep for backward compat
+    notes = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+
+
+# ════════════════════════════════════
+#     NEW RBAC & ADMIN MODELS
+# ════════════════════════════════════
+
+class Role(Base):
+    __tablename__ = "roles"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    name = Column(String, unique=True, nullable=False, index=True)  # "super_admin", "hospital_admin", "doctor", "patient"
+    description = Column(String, nullable=True)
+    permissions = Column(JSON, nullable=False, default={})  # {"user.create": True, "user.delete": True}
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class UserRole(Base):
+    __tablename__ = "user_roles"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    role_id = Column(UUID(as_uuid=True), ForeignKey("roles.id"), nullable=False, index=True)
+    assigned_at = Column(DateTime, default=datetime.utcnow)
+    assigned_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+
+    user = relationship("User", foreign_keys=[user_id])
+    role = relationship("Role")
+    assigner = relationship("User", foreign_keys=[assigned_by])
+
+class Organization(Base):
+    __tablename__ = "organizations"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    name = Column(String, nullable=False)
+    type = Column(String, default="hospital")  # "hospital", "clinic", "individual"
+    address = Column(String, nullable=True)
+    phone = Column(String, nullable=True)
+    email = Column(String, nullable=True)
+    website = Column(String, nullable=True)
+    license_number = Column(String, nullable=True)
+    is_verified = Column(Boolean, default=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class AuditLog(Base):
+    __tablename__ = "audit_logs"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True, index=True)
+    action = Column(String, nullable=False)  # "create", "update", "delete", "login", "access"
+    resource_type = Column(String, nullable=False)  # "user", "patient", "prescription", etc.
+    resource_id = Column(UUID(as_uuid=True), nullable=True)
+    old_value = Column(JSON, nullable=True)
+    new_value = Column(JSON, nullable=True)
+    ip_address = Column(String, nullable=True)
+    user_agent = Column(String, nullable=True)
+    status = Column(String, default="success")  # "success", "failed"
+    details = Column(Text, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+
+class Appointment(Base):
+    __tablename__ = "appointments"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    doctor_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    patient_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    appointment_date = Column(DateTime, nullable=False, index=True)
+    duration_minutes = Column(Integer, default=30)
+    status = Column(String, default="scheduled")  # "scheduled", "completed", "cancelled", "no_show"
+    appointment_type = Column(String, default="consultation")  # "consultation", "followup", "checkup"
+    notes = Column(Text, nullable=True)
+    cancellation_reason = Column(String, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+class File(Base):
+    __tablename__ = "files"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    file_name = Column(String, nullable=False)
+    file_type = Column(String, nullable=False)  # "pdf", "image", "document", etc.
+    file_size = Column(Integer, nullable=False)
+    s3_key = Column(String, nullable=True)  # Path in S3
+    s3_url = Column(String, nullable=True)  # Public URL from S3
+    resource_type = Column(String, nullable=False)  # "medical_report", "prescription", "profile_photo"
+    resource_id = Column(UUID(as_uuid=True), nullable=True)  # FK to related resource
+    uploaded_by = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=True)
+    is_public = Column(Boolean, default=False)
+    access_log = Column(JSON, nullable=True)  # Track who accessed this file
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+    expires_at = Column(DateTime, nullable=True)
+
+class Notification(Base):
+    __tablename__ = "notifications"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    title = Column(String, nullable=False)
+    message = Column(Text, nullable=False)
+    notification_type = Column(String, default="info")  # "info", "warning", "error", "success"
+    channel = Column(String, default="in_app")  # "in_app", "email", "sms", "push"
+    is_read = Column(Boolean, default=False)
+    read_at = Column(DateTime, nullable=True)
+    action_url = Column(String, nullable=True)
+    extra_metadata = Column(JSON, nullable=True)
+    created_at = Column(DateTime, default=datetime.utcnow, index=True)
+

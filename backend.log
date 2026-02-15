@@ -1,0 +1,131 @@
+INFO:     Will watch for changes in these directories: ['/Users/nilaychavhan/Downloads/her/hercare-backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [62437] using StatReload
+INFO:     Started server process [62493]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:54849 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54850 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+INFO:     127.0.0.1:54854 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54856 - "GET /api/v1/users/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54857 - "POST /api/v1/appointments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:54858 - "GET /api/v1/appointments HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54859 - "GET /api/v1/doctors/profile HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:54861 - "GET /api/v1/doctors/prescriptions HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:54862 - "POST /api/v1/telemedicine/consultations HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:54863 - "GET /api/v1/telemedicine/consultations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54864 - "GET /api/v1/telemedicine/conversations HTTP/1.1" 200 OK
+AUDIT LOG: User b797825e-6657-475b-baf0-9c720f11cfa1 performed health_metric_recorded on metric:8e93d286-89d1-40d7-af01-688219493a0d - success
+INFO:     127.0.0.1:54865 - "POST /api/v1/analytics/health-metrics HTTP/1.1" 201 Created
+INFO:     127.0.0.1:54866 - "GET /api/v1/analytics/health-metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54867 - "GET /api/v1/analytics/insights HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54868 - "GET /api/v1/analytics/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54942 - "GET /api/v1/health-metrics HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55182 - "OPTIONS /api/v1/auth/register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55182 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+INFO:     127.0.0.1:55203 - "POST /api/v1/auth/register HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:55211 - "OPTIONS /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55211 - "POST /api/v1/auth/login HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55222 - "POST /api/v1/auth/login HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55255 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55275 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+INFO:     127.0.0.1:55307 - "POST /api/v1/auth/login HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55424 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+INFO:     127.0.0.1:55487 - "OPTIONS /api/v1/auth/register HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:55572 - "OPTIONS /api/v1/auth/register HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:55572 - "OPTIONS /api/v1/auth/register HTTP/1.1" 400 Bad Request
+INFO:     127.0.0.1:55591 - "OPTIONS /api/v1/auth/register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55591 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [62493]
+INFO:     Started server process [64535]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [64535]
+INFO:     Started server process [64548]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55650 - "OPTIONS /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55650 - "POST /api/v1/auth/login HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55717 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55724 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+INFO:     127.0.0.1:55797 - "POST /api/v1/auth/login HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55807 - "OPTIONS /api/v1/auth/register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55807 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+INFO:     127.0.0.1:55817 - "POST /api/v1/auth/login HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:55875 - "POST /api/v1/auth/login HTTP/1.1" 401 Unauthorized
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [64548]
+INFO:     Started server process [65724]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [65724]
+INFO:     Started server process [65741]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:55968 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56012 - "GET /?id=9b1b8d93-6041-4785-88e4-38fc8e4c7ad2&vscodeBrowserReqId=1771164859368 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56095 - "OPTIONS /api/v1/auth/register HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56095 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [65741]
+INFO:     Started server process [66428]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'main.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [66428]
+INFO:     Started server process [66439]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:56218 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56219 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+INFO:     127.0.0.1:56221 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56223 - "GET /api/v1/users/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56224 - "POST /api/v1/appointments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:56225 - "GET /api/v1/appointments HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56226 - "GET /api/v1/doctors/profile HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:56227 - "GET /api/v1/doctors/prescriptions HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:56228 - "POST /api/v1/telemedicine/consultations HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:56229 - "GET /api/v1/telemedicine/consultations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56230 - "GET /api/v1/telemedicine/conversations HTTP/1.1" 200 OK
+AUDIT LOG: User 0ba9e7e5-664f-4675-bbcc-461e0a048d03 performed health_metric_recorded on metric:cdfc1582-fe61-421c-9308-95e564fa7564 - success
+INFO:     127.0.0.1:56231 - "POST /api/v1/analytics/health-metrics HTTP/1.1" 201 Created
+INFO:     127.0.0.1:56232 - "GET /api/v1/analytics/health-metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56233 - "GET /api/v1/analytics/insights HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56234 - "GET /api/v1/analytics/dashboard HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56342 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56343 - "POST /api/v1/auth/register HTTP/1.1" 201 Created
+INFO:     127.0.0.1:56345 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56346 - "GET /api/v1/users/profile HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56347 - "POST /api/v1/appointments HTTP/1.1" 201 Created
+INFO:     127.0.0.1:56349 - "GET /api/v1/appointments HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56350 - "GET /api/v1/doctors/profile HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:56351 - "GET /api/v1/doctors/prescriptions HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:56353 - "POST /api/v1/telemedicine/consultations HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:56354 - "GET /api/v1/telemedicine/consultations HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56355 - "GET /api/v1/telemedicine/conversations HTTP/1.1" 200 OK
+AUDIT LOG: User c70a6c49-77c8-4f21-b3f3-a67fa9537424 performed health_metric_recorded on metric:496b51d5-3b66-4c90-b3bf-d2b2319ecd95 - success
+INFO:     127.0.0.1:56356 - "POST /api/v1/analytics/health-metrics HTTP/1.1" 201 Created
+INFO:     127.0.0.1:56357 - "GET /api/v1/analytics/health-metrics HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56358 - "GET /api/v1/analytics/insights HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56359 - "GET /api/v1/analytics/dashboard HTTP/1.1" 200 OK
