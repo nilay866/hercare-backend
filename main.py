@@ -58,7 +58,10 @@ extra_allowed_origins = [
 app.add_middleware(
     CORSMiddleware,
     allow_origins=list(dict.fromkeys(default_allowed_origins + extra_allowed_origins)),
-    allow_origin_regex=os.getenv("ALLOW_ORIGIN_REGEX", r"http://localhost:.*"),
+    allow_origin_regex=os.getenv(
+        "ALLOW_ORIGIN_REGEX",
+        r"(http://localhost:.*)|(https://.*\.cloudfront\.net)",
+    ),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
